@@ -1,0 +1,29 @@
+
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USER=wallet
+      - DATABASE_PASSWORD=T3ST3
+      - PORT=5000
+  db:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_USER=wallet
+      - POSTGRES_PASSWORD=T3ST3
+      - POSTGRES_DB=wallet-test
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./resources/schema.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "wallet_pg_data:/var/lib/postgresql/data"
+
+volumes:
+  wallet_pg_data:
