@@ -1,12 +1,11 @@
 package com.github.joaolucasl.wallet_service
 
 import com.github.joaolucasl.wallet_service.infrastructure.DatabaseConfig
-import io.ktor.application.call
+import com.github.joaolucasl.wallet_service.infrastructure.modules.controllersModule
+import com.github.joaolucasl.wallet_service.interfaces.persons
 import io.ktor.application.install
 import io.ktor.features.CallLogging
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.routing
+import io.ktor.routing.Routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import org.koin.ktor.ext.Koin
@@ -22,12 +21,11 @@ fun main(args: Array<String>) {
         }
         install(Koin) {
             slf4jLogger()
+            modules(controllersModule)
         }
 
-        routing {
-            get("/hello") {
-                call.respondText("Hello")
-            }
+        install(Routing) {
+            persons()
         }
     }.start(wait = true)
 }
