@@ -45,7 +45,8 @@ dependencies {
     // Ktor
     compile "io.ktor:ktor-server-core:$ktor_version"
     compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "io.ktor:ktor-serialization:$ktor_version"
+    compile "io.ktor:ktor-jackson:$ktor_version"
+
 
     compile "com.zaxxer:HikariCP:3.4.5"
     compile "org.postgresql:postgresql:42.2.12"
@@ -53,6 +54,10 @@ dependencies {
 
     // Logging
     compile "ch.qos.logback:logback-classic:1.2.1"
+
+    // Serialization
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.11.1"
+
 }
 
 def className = "com.github.joaolucasl.wallet_service.ServerKt"
