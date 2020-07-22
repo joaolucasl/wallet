@@ -8,9 +8,9 @@ import io.ktor.application.ApplicationCall
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
-import io.ktor.response.respondText
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.slf4j.LoggerFactory
+import java.util.*
 
 class PersonsController(val personsRepository: PersonsRepository) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
@@ -21,6 +21,27 @@ class PersonsController(val personsRepository: PersonsRepository) {
             personsRepository.findAll()
         }
         ctx.respond(HttpStatusCode.OK, PersonsListDTO(items = persons))
+    }
+
+    suspend fun get(ctx: ApplicationCall) {
+        val id = ctx.parameters["id"]!!
+
+        val person = transaction {
+            Person.findById(UUID.fromString(id))
+        }
+
+        val personDTO = PersonDTO(
+            id = person!!.id.value,
+            legalName = person.legalName,
+            displayName = person.displayName,
+            motherName = person.motherName,
+            birthDate = person.birthDate,
+            registrationId = person.registrationId,
+            createdAt = person.createdAt,
+            updatedAt = person.updatedAt
+        )
+
+        ctx.respond(HttpStatusCode.OK, personDTO)
     }
 
     suspend fun create(ctx: ApplicationCall) {

@@ -11,10 +11,10 @@ class Person(id: EntityID<UUID>) : Entity<UUID>(id) {
     companion object : EntityClass<UUID, Person>(Persons)
 
     var legalName by Persons.legalName
-    val displayName by Persons.displayName
-    val motherName by Persons.motherName
-    val birthDate by Persons.birthDate
-    val registrationId by Persons.registrationId
-    val createdAt by Persons.createdAt
-    val updatedAt by Persons.updatedAt
+    var displayName by Persons.displayName
+    var motherName by Persons.motherName
+    var birthDate by Persons.birthDate
+    var registrationId by Persons.registrationId
+    var createdAt by Persons.createdAt
+    var updatedAt by Persons.updatedAt
 }

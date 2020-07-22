@@ -12,6 +12,7 @@ fun Routing.persons() {
 
     route("persons") {
         get { personsController.getAll(this.context) }
+        get("/{id}") { personsController.get(this.context) }
         post { personsController.create(this.context) }
     }
 }

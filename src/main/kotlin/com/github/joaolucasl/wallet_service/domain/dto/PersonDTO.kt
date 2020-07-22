@@ -1,7 +1,7 @@
 package com.github.joaolucasl.wallet_service.domain.dto
 
 import org.joda.time.DateTime
-import java.util.*
+import java.util.UUID
 
 data class PersonDTO(
         val id: UUID?,
