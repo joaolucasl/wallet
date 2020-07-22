@@ -1,15 +1,22 @@
 package com.github.joaolucasl.wallet_service.infrastructure.persistence
 
+import com.github.joaolucasl.wallet_service.domain.dto.PersonDTO
 import com.github.joaolucasl.wallet_service.domain.models.Person
 import com.github.joaolucasl.wallet_service.domain.repositories.Persons
 import com.github.joaolucasl.wallet_service.domain.repositories.PersonsRepository
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
+import org.slf4j.LoggerFactory
+import java.util.*
 
 class PersonsRepositoryImpl : PersonsRepository {
-    override fun findAll(): List<Person> {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
+
+    override fun findAll(): List<PersonDTO> {
         return Persons.selectAll().map {
-            Person(
-                id = it[Persons.id],
+            PersonDTO(
+                id = it[Persons.id].value,
                 legalName = it[Persons.legalName],
                 displayName = it[Persons.displayName],
                 motherName = it[Persons.motherName],
@@ -20,4 +27,17 @@ class PersonsRepositoryImpl : PersonsRepository {
             )
         }
     }
+
+    override fun create(person: PersonDTO) =
+        transaction {
+            val personId = Persons.insertAndGetId {
+                it[legalName] = person.legalName
+                it[displayName] = person.displayName
+                it[motherName] = person.motherName
+                it[birthDate] = person.birthDate
+                it[registrationId] = person.registrationId
+            }
+
+            person.copy(id = personId.value)
+        }
 }

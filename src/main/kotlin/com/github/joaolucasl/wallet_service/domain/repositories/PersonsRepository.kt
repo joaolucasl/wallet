@@ -1,10 +1,10 @@
 package com.github.joaolucasl.wallet_service.domain.repositories
 
+import com.github.joaolucasl.wallet_service.domain.dto.PersonDTO
 import com.github.joaolucasl.wallet_service.domain.models.Person
-import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.dao.UUIDTable
 
-object Persons : Table("persons") {
-    val id = uuid("id").primaryKey()
+object Persons : UUIDTable("persons") {
     val legalName = varchar("legalname", 100)
     val displayName = varchar("displayname", 100)
     val motherName = varchar("mothername", 100)
@@ -15,5 +15,6 @@ object Persons : Table("persons") {
 }
 
 interface PersonsRepository {
-    fun findAll(): List<Person>
+    fun findAll(): List<PersonDTO>
+    fun create(person: PersonDTO): PersonDTO
 }
