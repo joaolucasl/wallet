@@ -11,7 +11,7 @@ fun Routing.persons() {
     val personsController by inject<PersonsController>()
 
     route("persons") {
-        get { personsController.get(this.context) }
+        get { personsController.getAll(this.context) }
         post { personsController.create(this.context) }
     }
 }

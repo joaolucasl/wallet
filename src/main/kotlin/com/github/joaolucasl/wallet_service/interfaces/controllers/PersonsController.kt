@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory
 class PersonsController(val personsRepository: PersonsRepository) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
 
-    suspend fun get(ctx: ApplicationCall) {
+    suspend fun getAll(ctx: ApplicationCall) {
 
         val persons = transaction {
             personsRepository.findAll()
