@@ -30,18 +30,7 @@ class PersonsController(val personsRepository: PersonsRepository) {
             Person.findById(UUID.fromString(id))
         }
 
-        val personDTO = PersonDTO(
-            id = person!!.id.value,
-            legalName = person.legalName,
-            displayName = person.displayName,
-            motherName = person.motherName,
-            birthDate = person.birthDate,
-            registrationId = person.registrationId,
-            createdAt = person.createdAt,
-            updatedAt = person.updatedAt
-        )
-
-        ctx.respond(HttpStatusCode.OK, personDTO)
+        ctx.respond(HttpStatusCode.OK, person!!.toDTO())
     }
 
     suspend fun create(ctx: ApplicationCall) {

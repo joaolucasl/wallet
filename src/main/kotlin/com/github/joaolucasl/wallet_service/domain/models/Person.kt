@@ -1,5 +1,6 @@
 package com.github.joaolucasl.wallet_service.domain.models
 
+import com.github.joaolucasl.wallet_service.domain.dto.PersonDTO
 import com.github.joaolucasl.wallet_service.domain.repositories.Persons
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
@@ -17,4 +18,8 @@ class Person(id: EntityID<UUID>) : Entity<UUID>(id) {
     var registrationId by Persons.registrationId
     var createdAt by Persons.createdAt
     var updatedAt by Persons.updatedAt
+
+    fun toDTO(): PersonDTO {
+        return PersonDTO.from(this)
+    }
 }
