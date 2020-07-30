@@ -33,7 +33,3 @@ data class PersonDTO(
         }
     }
 }
-
-fun Person.from(person: Person) {
-
-}
