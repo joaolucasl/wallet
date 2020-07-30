@@ -1,6 +1,7 @@
 package com.github.joaolucasl.wallet_service.domain.services
 
 import com.github.joaolucasl.wallet_service.domain.dto.PersonDTO
+import com.github.joaolucasl.wallet_service.domain.dto.validatePersonDTO
 import com.github.joaolucasl.wallet_service.domain.models.Person
 import com.github.joaolucasl.wallet_service.domain.repositories.PersonsRepository
 import com.github.joaolucasl.wallet_service.infrastructure.errors.CustomError
@@ -21,5 +22,11 @@ class PersonService(val personsRepository: PersonsRepository) {
         return person.toDTO()
     }
 
-    fun create(personData: PersonDTO): PersonDTO = personsRepository.create(personData)
+    fun create(personData: PersonDTO): PersonDTO {
+        val validationResult = validatePersonDTO(personData)
+        if(validationResult.errors.isNotEmpty()) {
+           throw CustomError("Invalid Person Data", HttpStatusCode.BadRequest.value, validationResult.errors.toString())
+        }
+        return personsRepository.create(personData)
+    }
 }

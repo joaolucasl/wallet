@@ -58,6 +58,8 @@ dependencies {
     // Serialization
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.11.1"
 
+    // Validation
+    compile "io.konform:konform-jvm:0.2.0"
 }
 
 def className = "com.github.joaolucasl.wallet_service.ServerKt"
@@ -80,4 +82,5 @@ repositories {
     jcenter()
     maven { url "https://dl.bintray.com/kotlin/kotlinx" }
     maven { url "https://dl.bintray.com/kotlin/ktor" }
+    maven { url "https://dl.bintray.com/konform-kt/konform" }
 }

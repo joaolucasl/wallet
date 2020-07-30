@@ -10,7 +10,7 @@ fun StatusPages.Configuration.registerHandlers() {
         this.context.respond(HttpStatusCode.InternalServerError, CustomError(
                 title = "GenericException",
                 status = HttpStatusCode.InternalServerError.value,
-                detail = cause.message ?: "No Message"
+                detail = cause.message ?: "No Message!"
         ))
     }
 

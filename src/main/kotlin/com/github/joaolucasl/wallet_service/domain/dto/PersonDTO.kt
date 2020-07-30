@@ -1,6 +1,8 @@
 package com.github.joaolucasl.wallet_service.domain.dto
 
 import com.github.joaolucasl.wallet_service.domain.models.Person
+import com.github.joaolucasl.wallet_service.util.validateCpf
+import io.konform.validation.Validation
 import org.joda.time.DateTime
 import java.util.UUID
 
@@ -30,6 +32,20 @@ data class PersonDTO(
                 createdAt = person.createdAt,
                 updatedAt = person.updatedAt
             )
+        }
+    }
+}
+
+val validatePersonDTO = Validation<PersonDTO> {
+    PersonDTO::birthDate {
+        addConstraint("Invalid BirthDate") {
+            it.isBeforeNow
+        }
+    }
+
+    PersonDTO::registrationId {
+        addConstraint("Invalid Registration ID") {
+            validateCpf(it)
         }
     }
 }
