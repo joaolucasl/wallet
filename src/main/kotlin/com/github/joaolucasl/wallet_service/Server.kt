@@ -7,6 +7,7 @@ import com.github.joaolucasl.wallet_service.infrastructure.errors.CustomError
 import com.github.joaolucasl.wallet_service.infrastructure.errors.registerHandlers
 import com.github.joaolucasl.wallet_service.infrastructure.modules.controllersModule
 import com.github.joaolucasl.wallet_service.infrastructure.modules.repositoriesModule
+import com.github.joaolucasl.wallet_service.infrastructure.modules.servicesModule
 import com.github.joaolucasl.wallet_service.interfaces.persons
 import io.ktor.application.install
 import io.ktor.features.CallLogging
@@ -42,7 +43,7 @@ fun main(args: Array<String>) {
 
         install(Koin) {
             slf4jLogger()
-            modules(controllersModule, repositoriesModule)
+            modules(controllersModule, repositoriesModule, servicesModule)
         }
 
         install(StatusPages) {

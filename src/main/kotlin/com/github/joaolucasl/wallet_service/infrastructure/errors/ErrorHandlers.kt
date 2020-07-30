@@ -13,4 +13,8 @@ fun StatusPages.Configuration.registerHandlers() {
                 detail = cause.message ?: "No Message"
         ))
     }
+
+    exception<CustomError> { cause ->
+        this.context.respond(HttpStatusCode.fromValue(cause.status), cause)
+    }
 }
